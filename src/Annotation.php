@@ -94,16 +94,15 @@ class Annotation {
     private function parseVariableDeclaration($declaration, $name) {
         $type = gettype($declaration);
         if ($type !== 'string') {
-            throw new \InvalidArgumentException(
-            "Raw declaration must be string, $type given. Key='$name'.");
+            throw new \InvalidArgumentException("Raw declaration must be string, $type given. Key='$name'.");
         }
         if (strlen($declaration) === 0) {
-            throw new \InvalidArgumentException(
-            "Raw declaration cannot have zero length. Key='$name'.");
+            throw new \InvalidArgumentException("Raw declaration cannot have zero length. Key='$name'.");
         }
 
         $declaration = explode(" ", $declaration);
         if (sizeof($declaration) == 1) {
+            
             // string is default type
             array_unshift($declaration, "string");
         }
@@ -118,6 +117,7 @@ class Annotation {
 
     private function parseValue($originalValue) {
         if ($originalValue && $originalValue !== 'null') {
+            
             // try to json decode, if cannot then store as string
             if (($json = json_decode($originalValue, true)) === NULL) {
                 $value = $originalValue;
