@@ -8,7 +8,7 @@ class Annotation {
     private $parameters;
     private $keyPattern = "[A-z0-9\_\-]+";
     private $endPattern = "[ ]*(?:@|\r\n|\n)";
-    private $parsedAll = FALSE;
+    private $parsedAll = false;
 
     public function __construct() {
         $arguments = func_get_args();
@@ -76,7 +76,7 @@ class Annotation {
                     $this->parameters[$match[1]] = $parsedValue;
                 }
             } else if (preg_match("/^" . $this->keyPattern . "$/", $rawParameter, $match)) {
-                $this->parameters[$rawParameter] = TRUE;
+                $this->parameters[$rawParameter] = true;
             } else {
                 $this->parameters[$rawParameter] = NULL;
             }
@@ -119,7 +119,7 @@ class Annotation {
     private function parseValue($originalValue) {
         if ($originalValue && $originalValue !== 'null') {
             // try to json decode, if cannot then store as string
-            if (($json = json_decode($originalValue, TRUE)) === NULL) {
+            if (($json = json_decode($originalValue, true)) === NULL) {
                 $value = $originalValue;
             } else {
                 $value = $json;
@@ -133,7 +133,7 @@ class Annotation {
     public function getParameters() {
         if (!$this->parsedAll) {
             $this->parse();
-            $this->parsedAll = TRUE;
+            $this->parsedAll = true;
         }
         return $this->parameters;
     }
