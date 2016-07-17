@@ -30,6 +30,8 @@ class Annotation {
         }
         $this->rawDocBlock = $reflection->getDocComment();
         $this->parameters = array();
+        
+        return $this;
     }
 
     private function parseSingle($key) {
