@@ -10,7 +10,7 @@ class Annotation {
     private $endPattern = "[ ]*(?:@|\r\n|\n)";
     private $parsedAll = false;
 
-    public function __construct() {
+    public function init() {
         $arguments = func_get_args();
         $count = count($arguments);
 
