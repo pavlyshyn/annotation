@@ -4,11 +4,23 @@ namespace Pavlyshyn;
 
 class Annotation {
 
+    private static $instance;
     private $rawDocBlock;
     private $parameters;
     private $keyPattern = "[A-z0-9\_\-]+";
     private $endPattern = "[ ]*(?:@|\r\n|\n)";
     private $parsedAll = false;
+
+    /**
+     * 
+     * @return self
+     */
+    public static function getInstance() {
+        if (null === static::$instance) {
+            self::$instance = new Annotation();
+        }
+        return self::$instance;
+    }
 
     public function init() {
         $arguments = func_get_args();
@@ -30,7 +42,7 @@ class Annotation {
         }
         $this->rawDocBlock = $reflection->getDocComment();
         $this->parameters = array();
-        
+
         return $this;
     }
 
@@ -104,7 +116,7 @@ class Annotation {
 
         $declaration = explode(" ", $declaration);
         if (sizeof($declaration) == 1) {
-            
+
             // string is default type
             array_unshift($declaration, "string");
         }
@@ -119,7 +131,7 @@ class Annotation {
 
     private function parseValue($originalValue) {
         if ($originalValue && $originalValue !== 'null') {
-            
+
             // try to json decode, if cannot then store as string
             if (($json = json_decode($originalValue, true)) === NULL) {
                 $value = $originalValue;
