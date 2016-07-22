@@ -33,10 +33,10 @@ class Annotation {
         } else if ($count === 1) {
             $reflection = new \ReflectionClass($arguments[0]);
         } else {
-            $type = $count === 3 ? $arguments[2] : "method";
-            if ($type === "method") {
+            if (is_callable([$arguments[0], $arguments[1]])) {
                 $reflection = new \ReflectionMethod($arguments[0], $arguments[1]);
-            } else if ($type === "property") {
+            } else {
+                
                 $reflection = new \ReflectionProperty($arguments[0], $arguments[1]);
             }
         }
